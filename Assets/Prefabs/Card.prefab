@@ -511,13 +511,14 @@ MonoBehaviour:
   artZone: {fileID: 6500397608765303453}
   artSize: {x: 200, y: 300}
   isSaveOnDevice: 0
-  attack:
+  parameters:
+  - type: 0
     field: {fileID: 6500397609543777783}
     value: 0
-  hp:
+  - type: 1
     field: {fileID: 6500397609037738983}
     value: 0
-  mana:
+  - type: 2
     field: {fileID: 6500397608871363899}
     value: 0
   title: {fileID: 6500397608497042548}

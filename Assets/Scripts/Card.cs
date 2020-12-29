@@ -16,9 +16,7 @@ public class Card : MonoBehaviour
     private Sprite art;
 
     [Header("Параметры")]
-    public CardParameter attack;
-    public CardParameter hp;
-    public CardParameter mana;
+    public CardParameter[] parameters;
 
     [Header("Текстовые поля")]
     public TMP_Text title;
@@ -39,9 +37,10 @@ public class Card : MonoBehaviour
     void Start()
     {
         LoadImage();
-        attack.Value = Random.Range(1, 5);
-        mana.Value = Random.Range(1, 5);
-        hp.Value = Random.Range(5, 10);
+        foreach (var parameter in parameters)
+        {
+            parameter.Value = Random.Range(15, 20);
+        }
     }
 
     void Update()
@@ -79,9 +78,11 @@ public class Card : MonoBehaviour
 [System.Serializable]
 public class CardParameter
 {
+    [SerializeField] private CardParameterType type;
     [SerializeField] private TMP_Text field;
     [SerializeField] private int value;
 
+    public CardParameterType Type { get => type; set => type = value; }
     public TMP_Text Field { get => field; set => field = value; }
     public int Value
     { 
@@ -93,4 +94,9 @@ public class CardParameter
             Field.transform.DOShakeScale(1);
         }
     }
+}
+
+public enum CardParameterType
+{
+    Attack, HP, Mana
 }
