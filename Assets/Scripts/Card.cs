@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using DigitalRuby.Tween;
 
 public class Card : MonoBehaviour
 {
@@ -90,8 +89,6 @@ public class CardParameter
         {
             this.value = value;
             Field.text = value.ToString();
-
-
         }
     }
 }
