@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -8,8 +10,18 @@ public class Card : MonoBehaviour
 {
     [Header("Арт")]
     [SerializeField] private Image artZone;
-    [SerializeField] private int imageWidth, imageHeight;
+    [SerializeField] private Vector2 artSize;
+    [SerializeField] private bool isSaveOnDevice;
     private Sprite art;
+
+    [Header("Параметры")]
+    public CardParameter attack;
+    public CardParameter hp;
+    public CardParameter mana;
+
+    [Header("Текстовые поля")]
+    [SerializeField] private TMP_Text title;
+    [SerializeField] private TMP_Text description;
 
     #region Свойства
     public Sprite Art
@@ -26,6 +38,9 @@ public class Card : MonoBehaviour
     void Start()
     {
         LoadImage();
+        attack.Value = Random.Range(1, 5);
+        mana.Value = Random.Range(1, 5);
+        hp.Value = Random.Range(5, 10);
     }
 
     void Update()
@@ -35,7 +50,7 @@ public class Card : MonoBehaviour
 
     public void LoadImage()
     {
-        string url = "https://picsum.photos/" + imageWidth + "/" + imageHeight;
+        string url = "https://picsum.photos/" + artSize.x + "/" + artSize.y;
         StartCoroutine(LoadingImage(url));
     }
     private IEnumerator LoadingImage(string url)
@@ -47,6 +62,33 @@ public class Card : MonoBehaviour
         {
             Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
             Art = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+
+            if (isSaveOnDevice)
+            {
+                byte[] bytes = texture.EncodeToPNG();
+                string name = texture.name + ".png";
+                File.WriteAllBytes(Application.persistentDataPath + name, bytes);
+            }
+        }
+        if (title.text == "") title.text = url;
+        if (description.text == "") description.text = "Рандомная картинка с " + url;
+    }
+}
+
+[System.Serializable]
+public class CardParameter
+{
+    [SerializeField] private TMP_Text field;
+    [SerializeField] private int value;
+
+    public TMP_Text Field { get => field; set => field = value; }
+    public int Value
+    { 
+        get => value;
+        set
+        {
+            this.value = value;
+            Field.text = value.ToString();
         }
     }
 }
