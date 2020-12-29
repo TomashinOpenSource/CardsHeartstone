@@ -21,8 +21,8 @@ public class Card : MonoBehaviour
     public CardParameter mana;
 
     [Header("Текстовые поля")]
-    [SerializeField] private TMP_Text title;
-    [SerializeField] private TMP_Text description;
+    public TMP_Text title;
+    public TMP_Text description;
 
     #region Свойства
     public Sprite Art
@@ -72,7 +72,7 @@ public class Card : MonoBehaviour
             }
         }
         if (title.text == "") title.text = url;
-        if (description.text == "") description.text = "Рандомная картинка с " + url;
+        description.text = "Рандомная картинка с " + url;
     }
 }
 
