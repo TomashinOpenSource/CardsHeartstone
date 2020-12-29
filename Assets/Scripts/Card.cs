@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Card : MonoBehaviour
 {
@@ -89,6 +90,7 @@ public class CardParameter
         {
             this.value = value;
             Field.text = value.ToString();
+            Field.transform.DOShakeScale(1);
         }
     }
 }
