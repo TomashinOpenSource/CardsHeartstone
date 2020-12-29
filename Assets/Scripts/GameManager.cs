@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Карты")]
     [SerializeField] private Transform cardsHolder;
     [SerializeField] private GameObject cardPrefab;
-    private List<Card> cards;
+    [SerializeField] private List<Card> cards;
+
 
     void Start()
     {
@@ -34,8 +36,8 @@ public class GameManager : MonoBehaviour
 
     public void SetCardsPositions()
     {
-        Vector2 size = cardPrefab.GetComponent<RectTransform>().sizeDelta;
-        Vector2 step = size * 2 / 3;
+        Vector2 width = cardPrefab.GetComponent<RectTransform>().sizeDelta;
+        Vector2 step = width * 2 / 3;
 
         for (int i = 0; i < cards.Count; i++)
         {
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
             cards[i].GetComponent<RectTransform>().localRotation = Quaternion.Euler(Vector3.forward * 10 * multipleAngle);
         }
 
-        cardsHolder.GetComponent<RectTransform>().anchoredPosition -= Vector2.right * (size + step / 2);
+        cardsHolder.GetComponent<RectTransform>().anchoredPosition -= Vector2.right * (width + step / 2);
     }
 
     public void ChangeValues()
